@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "undefined/subscriptions/71502e06-41a1-4882-91a8-745b6b920b45/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/WaterProjectMcKennaBackend",
+  "appService.deploySubpath": "backend/WaterProject.API/publish"
+}

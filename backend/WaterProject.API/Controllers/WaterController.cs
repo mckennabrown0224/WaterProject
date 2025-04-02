@@ -30,7 +30,7 @@ namespace WaterProject.API.Controllers
             var tempObject = new
             {
                 Projects = data, 
-                totalCount = totalCount
+                totalNumProjects = totalCount
             };
             
             return Ok(tempObject);
@@ -43,6 +43,53 @@ namespace WaterProject.API.Controllers
             
             return Ok(projectTypes);
         }
+
+        [HttpPost("AddProject")]
+        public IActionResult AddProject([FromBody] Project newProject)
+        {
+            _waterContext.Projects.Add(newProject);
+            _waterContext.SaveChanges();
+            return Ok(newProject);
+        }
+        
+        [HttpPut("UpdateProject/{projectID}")]
+        public IActionResult UpdateProject(int projectID, [FromBody] Project updatedProject)
+        {
+            var existingProject = _waterContext.Projects.Find(projectID);
+            if (existingProject == null)
+            {
+                return NotFound(new {message = "Project not found"});
+            }
+            else
+            {
+                existingProject.ProjectName = updatedProject.ProjectName;
+                existingProject.ProjectType = updatedProject.ProjectType;
+                existingProject.ProjectRegionalProgram = updatedProject.ProjectRegionalProgram;
+                existingProject.ProjectImpact = updatedProject.ProjectImpact;
+                existingProject.ProjectPhase = updatedProject.ProjectPhase;
+                existingProject.ProjectFunctionalityStatus = updatedProject.ProjectFunctionalityStatus;
+                
+                _waterContext.Projects.Update(existingProject);
+                _waterContext.SaveChanges();
+
+            }
+            return Ok(existingProject);
+        }
+
+        [HttpDelete("DeleteProject/{projectID}")]
+        public IActionResult DeleteProject(int projectID)
+        {
+            var project = _waterContext.Projects.Find(projectID);
+            if (project == null)
+            {
+                return NotFound(new {message = "Project not found"});
+            }
+            
+            _waterContext.Projects.Remove(project);
+            _waterContext.SaveChanges();
+            return NoContent();
+        }
+        
     }
 }
 
