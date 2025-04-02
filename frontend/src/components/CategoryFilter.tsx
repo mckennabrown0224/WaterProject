@@ -3,7 +3,7 @@ import './CategoryFilter.css';
 
 function CategoryFilter({
   selectedCategories,
-  setSelectedCategories
+  setSelectedCategories,
 }: {
   selectedCategories: string[];
   setSelectedCategories: (categories: string[]) => void;
@@ -17,13 +17,13 @@ function CategoryFilter({
       try {
         // Fetch category data from the API
         const response = await fetch(
-          'https://localhost:4050/api/Water/GetProjectTypes'
+          'https://waterprojectmckennabackend.azurewebsites.net/api/Water/GetProjectTypes'
         );
-        
+
         // Parse the response as JSON
         const data = await response.json();
         console.log('Fetched categories: ', data);
-        
+
         // Update state with fetched categories
         setCategories(data);
         // Initialize selected categories with all fetched categories
@@ -42,7 +42,7 @@ function CategoryFilter({
     const updatedCategories = selectedCategories.includes(target.value)
       ? selectedCategories.filter((x) => x !== target.value) // Remove if already selected
       : [...selectedCategories, target.value]; // Add if newly selected
-  
+
     // Update selected categories state
     setSelectedCategories(updatedCategories);
   }
